@@ -20,9 +20,13 @@
                     @endforeach
                 </select>
 
-                <x-primary-button onclick="generarTodo()">
-                    {{ __('Generar Todos') }}
-                </x-primary-button>
+                <form action="{{ route('facturas.generarTodo') }}" method="GET" class="inline">
+                    <input type="hidden" name="año" value="{{ request('year', date('Y')) }}">
+                    <input type="hidden" name="user_id" value="{{ request('user_id') }}">
+                    <x-primary-button type="submit">
+                        {{ __('Generar Todos') }}
+                    </x-primary-button>
+                </form>
             </div>
         </div>
     </x-slot>
@@ -38,19 +42,24 @@
                                     <h3 class="text-lg font-semibold">{{ $mes }}</h3>
                                     <div class="flex gap-2">
                                         @if(isset($facturas[$index + 1]))
-                                            <button 
-                                                class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
-                                                onclick="window.open('{{ route('facturas.pdf', ['mes' => $index + 1, 'año' => request('year', date('Y')), 'user_id' => request('user_id')]) }}', '_blank')"
-                                            >
-                                                {{ __('Ver PDF') }}
-                                            </button>
+                                            <form action="{{ route('facturas.pdf') }}" method="GET" class="inline" target="_blank">
+                                                <input type="hidden" name="mes" value="{{ $index + 1 }}">
+                                                <input type="hidden" name="year" value="{{ request('year', date('Y')) }}">
+                                                <input type="hidden" name="user_id" value="{{ request('user_id') }}">
+                                                <x-secondary-button type="submit">
+                                                    {{ __('Ver PDF') }}
+                                                </x-secondary-button>
+                                            </form>
                                         @endif
-                                        <button 
-                                            class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
-                                            onclick="generarFactura({{ $index + 1 }})"
-                                        >
-                                            {{ __('Generar') }}
-                                        </button>
+                                        
+                                        <form action="{{ route('facturas.generar') }}" method="GET" class="inline">
+                                            <input type="hidden" name="mes" value="{{ $index + 1 }}">
+                                            <input type="hidden" name="year" value="{{ request('year', date('Y')) }}">
+                                            <input type="hidden" name="user_id" value="{{ request('user_id') }}">
+                                            <x-primary-button type="submit">
+                                                {{ __('Generar') }}
+                                            </x-primary-button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -63,20 +72,6 @@
 
     @push('scripts')
     <script>
-        function generarFactura(mes) {
-            const year = document.getElementById('year').value;
-            const userId = document.getElementById('user_id').value;
-            
-            window.location.href = `{{ route('facturas.generar') }}?mes=${mes}&año=${year}&user_id=${userId}`;
-        }
-
-        function generarTodo() {
-            const year = document.getElementById('year').value;
-            const userId = document.getElementById('user_id').value;
-            
-            window.location.href = `{{ route('facturas.generarTodo') }}?año=${year}&user_id=${userId}`;
-        }
-
         document.getElementById('year').addEventListener('change', function() {
             window.location.href = "{{ route('facturas.index') }}?year=" + this.value + "&user_id=" + document.getElementById('user_id').value;
         });

@@ -11,7 +11,17 @@ class Factura extends Model
         'user_id',
         'mes',
         'año',
-        'resultado_id'
+        'antiguedad',	
+        'presentismo',
+        'horas_extras_50',	
+        'horas_extras_100',	
+        'jubilacion',
+        'ley_19032',
+        'obra_social',	
+        'sec_art_100',	
+        'faecys_art_100',	
+        'sec_art_101',
+        'osecac'	
     ];
 
     protected $casts = [
