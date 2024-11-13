@@ -11,12 +11,10 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        $cargoSupervisor = Cargo::where('nombre', 'Supervisor')->first();
-        
         // Crear 3 supervisores
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 1; $i++) {
             User::create([
-                'nombre' => "Supervisor{$i}",
+                'name' => "Supervisor{$i}",
                 'apellido' => "Apellido{$i}",
                 'dni' => "3000000{$i}",
                 'fecha_nacimiento' => '1980-01-01',
@@ -24,29 +22,52 @@ class UserSeeder extends Seeder
                 'telefono' => "11111111{$i}",
                 'email' => "supervisor{$i}@example.com",
                 'fecha_ingreso' => '2020-01-01',
-                'cargo_id' => $cargoSupervisor->id,
+                'cargo_id' => 1,
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),
             ]);
         }
 
-        // Crear 15 trabajadores
-        $cargoTrabajador = Cargo::where('nombre', 'Director')->first();
+        User::create([
+            'name' => "Juan",
+            'apellido' => "Pérez",
+            'dni' => "20000001",
+            'fecha_nacimiento' => '1985-05-15',
+            'direccion' => "Av. Principal 123",
+            'telefono' => "2222222201",
+            'email' => "juan.perez@example.com",
+            'fecha_ingreso' => '2019-03-01',
+            'cargo_id' => 2,
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
         
-        for ($i = 1; $i <= 15; $i++) {
-            User::create([
-                'nombre' => "Trabajador{$i}",
-                'apellido' => "Apellido{$i}",
-                'dni' => "2000000{$i}",
-                'fecha_nacimiento' => '1990-01-01',
-                'direccion' => "Dirección Trabajador {$i}",
-                'telefono' => "22222222{$i}",
-                'email' => "trabajador{$i}@example.com",
-                'fecha_ingreso' => '2021-01-01',
-                'cargo_id' => $cargoTrabajador->id,
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-            ]);
-        }
+        User::create([
+            'name' => "Ana",
+            'apellido' => "Gómez",
+            'dni' => "20000002",
+            'fecha_nacimiento' => '1992-07-08',
+            'direccion' => "Calle Secundaria 456",
+            'telefono' => "2222222202",
+            'email' => "ana.gomez@example.com",
+            'fecha_ingreso' => '2020-08-15',
+            'cargo_id' => 2,
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
+        
+        User::create([
+            'name' => "Carlos",
+            'apellido' => "López",
+            'dni' => "20000003",
+            'fecha_nacimiento' => '1988-02-20',
+            'direccion' => "Camino Vecinal 789",
+            'telefono' => "2222222203",
+            'email' => "carlos.lopez@example.com",
+            'fecha_ingreso' => '2021-05-30',
+            'cargo_id' => 2,
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+        ]);
     }
 } 

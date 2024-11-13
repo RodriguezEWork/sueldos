@@ -38,16 +38,25 @@
                             <p class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $user->email }}</p>
                         </div>
 
-                        <!-- Salario Base -->
                         <div>
-                            <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">Salario Base</h2>
-                            <p class="text-lg font-medium text-gray-900 dark:text-gray-100">${{ number_format($user->cargo->sueldo_base, 2) }}</p>
+                            <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">Dirección</h2>
+                            <p class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $user->direccion }}</p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">Fecha de Nacimiento</h2>
+                            <p class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $user->fecha_nacimiento->format('d/m/Y') }}</p>
                         </div>
 
                         <!-- Fecha de Creación -->
                         <div>
-                            <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">Fecha de Creación</h2>
-                            <p class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $user->created_at->format('d/m/Y') }}</p>
+                            <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">Fecha de Ingreso</h2>
+                            <p class="text-lg font-medium text-gray-900 dark:text-gray-100">{{ $user->fecha_ingreso->format('d/m/Y') }}</p>
+                        </div>
+                        <!-- Salario Base -->
+                        <div>
+                            <h2 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">Salario Base</h2>
+                            <p class="text-lg font-medium text-gray-900 dark:text-gray-100">${{ number_format($user->cargo->sueldo_base, 2) }}</p>
                         </div>
 
                         <!-- Última Actualización -->

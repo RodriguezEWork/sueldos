@@ -13,7 +13,7 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable;
 
     protected $fillable = [
-        'nombre',
+        'name',
         'apellido',
         'dni',
         'fecha_nacimiento',
@@ -39,11 +39,6 @@ class User extends Authenticatable
     public function cargo(): BelongsTo
     {
         return $this->belongsTo(Cargo::class);
-    }
-
-    public function resultados(): HasMany
-    {
-        return $this->hasMany(Resultado::class);
     }
 
     public function facturas(): HasMany
