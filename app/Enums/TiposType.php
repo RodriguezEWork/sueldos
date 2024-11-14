@@ -15,7 +15,7 @@ final class TiposType extends Enum
 {
     const LICENCIA_MEDICA = 1;
     const LICENCIA_MATERNA = 2;
-    const EXTRAS_50 = 3;
-    const EXTRAS_100 = 4;
+    const EXTRAS = 3;
+    const VACACIONES = 4;
     const INJUSTIFICADO = 5;
 }

@@ -65,6 +65,10 @@
             <td>${{ number_format($factura->horas_extras_100, 2) }}</td>
         </tr>
         <tr>
+            <td>Vacaciones</td>
+            <td>${{ number_format($factura->vacaciones, 2) }}</td>
+        </tr>
+        <tr>
             <td>jubilacion</td>
             <td>${{ number_format($factura->jubilacion, 2) }}</td>
         </tr>

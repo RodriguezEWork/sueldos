@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('presentismo');
             $table->integer('horas_extras_50');
             $table->integer('horas_extras_100');
+            $table->integer('vacaciones');
             $table->integer('jubilacion');
             $table->integer('ley_19032');
             $table->integer('obra_social');

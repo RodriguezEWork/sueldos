@@ -104,20 +104,49 @@ class FacturaController extends Controller
 
         $horas = $sueldo / 160;
         
-        $extras_50 = Bonificacion::where('tipo', TiposType::EXTRAS_50)
-            ->where('fecha', "=>" , Carbon::create("01-$mes-$año")->startOfMonth()->format('Y-m-d'))
-            ->where('fecha', "<=", Carbon::create("01-$mes-$año")->endOfMonth()->format('Y-m-d'))
+        // Filtrado para extra 50%: Entre las 00:00 de lunes y las 12:00 del sábado
+        $extras_50 = Bonificacion::where('tipo', TiposType::EXTRAS)
+            ->where('fecha', '>=', Carbon::create("01-$mes-$año")->startOfMonth()->format('Y-m-d'))
+            ->where('fecha', '<=', Carbon::create("01-$mes-$año")->endOfMonth()->format('Y-m-d'))
+            ->where(function ($query) {
+                $query->where(function ($q) {
+                    $q->where('start_time', '>=', '00:00:00')
+                    ->where('start_time', '<=', '23:59:59')
+                    ->whereDay('fecha', '=', Carbon::MONDAY);
+                })->orWhere(function ($q) {
+                    $q->where('end_time', '<=', '12:00:00')
+                    ->whereDay('fecha', '<=', Carbon::SATURDAY);
+                });
+            })
             ->count();
 
-        $extras_50 = ($horas * 0.150) * $extras_50; 
+        $extras_50 = ($horas * 0.150) * $extras_50;
 
-        $extras_100 = Bonificacion::where('tipo', TiposType::EXTRAS_100)
-            ->where('fecha', "=>" , Carbon::create("01-$mes-$año")->startOfMonth()->format('Y-m-d'))
-            ->where('fecha', "<=", Carbon::create("01-$mes-$año")->endOfMonth()->format('Y-m-d'))
+        // Filtrado para extra 100%: Entre las 12:00 del sábado y las 23:59 del domingo
+        $extras_100 = Bonificacion::where('tipo', TiposType::EXTRAS)
+            ->where('fecha', '>=', Carbon::create("01-$mes-$año")->startOfMonth()->format('Y-m-d'))
+            ->where('fecha', '<=', Carbon::create("01-$mes-$año")->endOfMonth()->format('Y-m-d'))
+            ->where(function ($query) {
+                $query->where(function ($q) {
+                    $q->where('start_time', '>=', '12:00:00')
+                    ->whereDay('fecha', '=', Carbon::SATURDAY);
+                })->orWhere(function ($q) {
+                    $q->where('end_time', '<=', '23:59:59')
+                    ->whereDay('fecha', '=', Carbon::SUNDAY);
+                });
+            })
             ->count();
 
         $extras_100 = ($horas * 0.150) * $extras_100;
+
+        // Filtrado para extra 100%: Entre las 12:00 del sábado y las 23:59 del domingo
+        $vacaciones = Bonificacion::where('tipo', TiposType::VACACIONES)
+            ->where('fecha', '>=', Carbon::create("01-$mes-$año")->startOfMonth()->format('Y-m-d'))
+            ->where('fecha', '<=', Carbon::create("01-$mes-$año")->endOfMonth()->format('Y-m-d'))
+            ->count();
+
         $sueldo_final = $sueldo + ($antiguedad * 0.01) + $presentismo + $extras_50 + $extras_100;
+        $sueldo_vacaciones = $sueldo_final / 25; 
 
         Factura::create([
             'user_id' => $userId,
@@ -133,6 +162,7 @@ class FacturaController extends Controller
             'sec_art_100' => $sueldo_final * 0.02,
             'faecys_art_100' => $sueldo_final * 0.005,
             'sec_art_101' => $sueldo_final * 0.02,
+            'vacaciones' => $sueldo_vacaciones * $vacaciones,
             'osecac' => 100,
         ]);
     }
