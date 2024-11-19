@@ -15,10 +15,10 @@ class BonificacionSeeder extends Seeder
      */
     public function run()
     {
-        $bonifMedic = self::extras();
+        $extras = self::extras();
 
         // Insertar los registros en la base de datos
-        DB::table('bonificaciones')->insert($bonifMedic);
+        DB::table('bonificaciones')->insert($extras);
     }
 
     private function extras() {
