@@ -21,6 +21,7 @@ class Factura extends Model
         'sec_art_100',	
         'faecys_art_100',	
         'sec_art_101',
+        'vacaciones',
         'osecac'	
     ];
 

@@ -37,7 +37,6 @@ class FacturaController extends Controller
         $año = $request->get('year');
         $userId = $request->get('user_id');
         $users = User::orderBy('apellido')->get();
-
         if ($userId) {
             $this->generarFacturaUsuario($userId, $mes, $año);
         } else {
@@ -89,6 +88,7 @@ class FacturaController extends Controller
 
         $antiguedad = $user->fecha_ingreso->diffInYears(now());
         $presentismo = Bonificacion::whereIn('tipo', [TiposType::LICENCIA_MEDICA, TiposType::LICENCIA_MATERNA, TiposType::INJUSTIFICADO])
+            ->where('user_id', $userId)
             ->where('fecha', "=>" , Carbon::create("01-$mes-$año")->startOfMonth()->format('Y-m-d'))
             ->where('fecha', "<=", Carbon::create("01-$mes-$año")->endOfMonth()->format('Y-m-d'))
             ->count();
@@ -106,6 +106,7 @@ class FacturaController extends Controller
         
         // Filtrado para extra 50%: Entre las 00:00 de lunes y las 12:00 del sábado
         $extras_50 = Bonificacion::where('tipo', TiposType::EXTRAS)
+            ->where('user_id', $userId)
             ->where('fecha', '>=', Carbon::create("01-$mes-$año")->startOfMonth()->format('Y-m-d'))
             ->where('fecha', '<=', Carbon::create("01-$mes-$año")->endOfMonth()->format('Y-m-d'))
             ->where(function ($query) {
@@ -124,6 +125,7 @@ class FacturaController extends Controller
 
         // Filtrado para extra 100%: Entre las 12:00 del sábado y las 23:59 del domingo
         $extras_100 = Bonificacion::where('tipo', TiposType::EXTRAS)
+            ->where('user_id', $userId)
             ->where('fecha', '>=', Carbon::create("01-$mes-$año")->startOfMonth()->format('Y-m-d'))
             ->where('fecha', '<=', Carbon::create("01-$mes-$año")->endOfMonth()->format('Y-m-d'))
             ->where(function ($query) {
@@ -141,6 +143,7 @@ class FacturaController extends Controller
 
         // Filtrado para extra 100%: Entre las 12:00 del sábado y las 23:59 del domingo
         $vacaciones = Bonificacion::where('tipo', TiposType::VACACIONES)
+            ->where('user_id', $userId)
             ->where('fecha', '>=', Carbon::create("01-$mes-$año")->startOfMonth()->format('Y-m-d'))
             ->where('fecha', '<=', Carbon::create("01-$mes-$año")->endOfMonth()->format('Y-m-d'))
             ->count();

@@ -30,7 +30,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>Factura de Liquidación</h1>
+        <h1>Facturación Morfeo S.A</h1>
     </div>
 
     <div class="details">

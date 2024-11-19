@@ -14,7 +14,6 @@ return new class extends Migration
             $table->date('fecha');
             $table->time('start_time');
             $table->time('end_time');
-            $table->date('fecha');
             $table->timestamps();
         });
     }

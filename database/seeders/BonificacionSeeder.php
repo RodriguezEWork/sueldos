@@ -3,43 +3,49 @@
 namespace Database\Seeders;
 
 use App\Enums\TiposType;
-use App\Models\User;
-use App\Models\Bonificacion;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class BonificacionSeeder extends Seeder
 {
-    public function run(): void
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
     {
-        $users = User::all();
-        $tipos = TiposType::all();
-        
-        foreach ($users as $user) {
-            // Generar bonificaciones para cada mes
-            for ($mes = 1; $mes <= 12; $mes++) {
-                // Seleccionar aleatoriamente 3-5 tipos de bonificación
-                $tiposSeleccionados = $tipos->random(rand(3, 5));
-                
-                foreach ($tiposSeleccionados as $tipo) {
-                    Bonificacion::create([
-                        'tipo_id' => $tipo->id,
-                        'fecha' => "2024-{$mes}-01",
-                        'user_id' => $user->id,
-                        'cantidad' => $this->getCantidadPorTipo($tipo->nombre)
-                    ]);
-                }
-            }
-        }
+        $bonifMedic = self::licMedic();
+
+        // Insertar los registros en la base de datos
+        DB::table('bonificaciones')->insert($bonifMedic);
     }
 
-    private function getCantidadPorTipo($tipoNombre)
-    {
-        return match($tipoNombre) {
-            'Horas extras 50%' => rand(1, 20), // Entre 1 y 20 horas
-            'Horas extras 100%' => rand(1, 10), // Entre 1 y 10 horas
-            'Presentismo' => rand(0, 1), // 0 = no presentismo, 1 = presentismo
-            'Antiguedad' => rand(1, 10), // Entre 1 y 10 años
-            default => 1, // Valor por defecto para otros tipos
-        };
+    private function licMedic() {
+        $bonificaciones = [];
+
+        $users = [2, 3, 4];
+        $meses = [1, 2, 3, 6, 8]; // Tres meses: enero, febrero y marzo
+
+        foreach ($users as $user) {
+            foreach ($meses as $mes) {
+                $dia = random_int(1, 28); // Día aleatorio dentro del mes
+                $fecha = "2024-$mes-$dia";
+
+                $startTime = "22:00:00"; // Fuera de horario laboral
+                $endTime = "23:59:00";
+
+                $bonificaciones[] = [
+                    'user_id' => $user,
+                    'tipo' => TiposType::EXTRAS,
+                    'fecha' => $fecha,
+                    'start_time' => $startTime,
+                    'end_time' => $endTime,
+                    'created_at' => now()
+                ];
+            }
+        }
+
+        return $bonificaciones;
     }
-} 
+}

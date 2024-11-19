@@ -10,21 +10,17 @@ class Bonificacion extends Model
     protected $table = 'bonificaciones';
     
     protected $fillable = [
-        'tipo_id',
-        'fecha',
         'user_id',
-        'cantidad'
+        'tipo',
+        'fecha',
+        'start_time',
+        'end_time'
     ];
 
     protected $casts = [
         'fecha' => 'date',
         'cantidad' => 'integer'
     ];
-
-    public function tipo(): BelongsTo
-    {
-        return $this->belongsTo(Tipo::class);
-    }
 
     public function user(): BelongsTo
     {
