@@ -25,6 +25,11 @@ return new class extends Migration
             $table->integer('faecys_art_100');
             $table->integer('sec_art_101');
             $table->integer('osecac');
+            $table->integer('horas_extras_50_nro');
+            $table->integer('horas_extras_100_nro');
+            $table->integer('vacaciones_nro');
+            $table->integer('injustificadas');
+            $table->integer('justificadas');
             $table->timestamps();
 
             // Índice único para evitar duplicados

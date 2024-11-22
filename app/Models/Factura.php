@@ -22,7 +22,12 @@ class Factura extends Model
         'faecys_art_100',	
         'sec_art_101',
         'vacaciones',
-        'osecac'	
+        'osecac',
+        'horas_extras_50_nro',	
+        'horas_extras_100_nro',	
+        'vacaciones_nro',	
+        'injustificadas',	
+        'justificadas',	
     ];
 
     protected $casts = [

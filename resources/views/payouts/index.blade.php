@@ -32,10 +32,10 @@
                                         Faltas Injustificadas
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                        Licencia Materna
+                                        Faltas Justificadas
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                        Otras Licencias
+                                        Vacaciones
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         Horas Extras 50%
@@ -49,25 +49,25 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                @foreach(['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'] as $index => $mes)
+                                @foreach($facturas as $factura)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            {{ $mes }}
+                                            {{ $factura->mes }} / {{ $factura->año }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            {{ $bonificaciones[$index + 1]['faltas'] ?? 0 }}
+                                            {{ $factura->injustificadas ?? 0 }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            {{ $bonificaciones[$index + 1]['licencia_materna'] ?? 0 }}
+                                            {{ $factura->justificadas ?? 0 }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            {{ $bonificaciones[$index + 1]['otras_licencias'] ?? 0 }}
+                                            {{ $factura->vacaciones_nro ?? 0 }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            {{ $bonificaciones[$index + 1]['horas_extras_50'] ?? 0 }}
+                                            {{ $factura->horas_extras_50_nro ?? 0 }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            {{ $bonificaciones[$index + 1]['horas_extras_100'] ?? 0 }}
+                                            {{ $factura->horas_extras_100_nro ?? 0 }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
                                         </td>

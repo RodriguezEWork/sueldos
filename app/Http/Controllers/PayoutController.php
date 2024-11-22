@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Payout;
 use App\Models\User;
 use App\Models\Concept; // Asegúrate de que este sea el nombre correcto de tu modelo de conceptos
+use App\Models\Factura;
 use Illuminate\Http\Request;
 
 class PayoutController extends Controller
@@ -22,12 +23,12 @@ class PayoutController extends Controller
         return view('payouts.index');
     }
 
-    public function show($userId, $payoutId)
+    public function show($userId)
     {
         // Obtener la liquidación con los conceptos relacionados
-        $payout = Payout::with('user', 'concepts')->findOrFail($payoutId);
+        $facturas = Factura::where('user_id', $userId)->get();
 
-        return view('payouts.show', compact('payout'));
+        return view('payouts.index', compact('facturas'));
     }
 
     public function store(Request $request)

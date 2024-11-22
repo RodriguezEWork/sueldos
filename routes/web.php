@@ -47,7 +47,7 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update
 Route::get('/liquidaciones/crear/{user}', [PayoutController::class, 'create'])->middleware(['auth', 'verified'])->name('liquidaciones.create');
 
 // Index
-Route::get('/liquidaciones/{userId}', [PayoutController::class, 'index'])->middleware(['auth', 'verified'])->name('liquidaciones.index');
+Route::get('/liquidaciones/{userId}', [PayoutController::class, 'show'])->middleware(['auth', 'verified'])->name('liquidaciones.index');
 
 // Store
 Route::post('/liquidaciones', [PayoutController::class, 'store'])->middleware(['auth', 'verified'])->name('liquidaciones.store');
