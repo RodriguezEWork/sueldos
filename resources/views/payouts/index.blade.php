@@ -70,6 +70,11 @@
                                             {{ $factura->horas_extras_100_nro ?? 0 }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
+                                            <a href="{{ route('facturas.pdf', ['user_id' => $factura->user_id, 'mes' => $factura->mes, 'year' => $factura->año]) }}" target="_blank">
+                                                <x-primary-button id="generateButton">
+                                                    Ver factura
+                                                </x-primary-button>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

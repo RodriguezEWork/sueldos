@@ -102,7 +102,11 @@ class FacturaController extends Controller
         //Presentismo
         //Un plus del 8,33% que se otorga si el empleado no tuvo inasistencias o llegadas tarde injustificadas en el mes.            
         
-        $presentismo = $presentismo_nro > 3 ? 0 : $sueldo * 0.0833; 
+        if($injustificadas == 0) {
+            $presentismo = $presentismo_nro > 3 ? 0 : $sueldo * 0.0833; 
+        } else {
+            $presentismo = 0;
+        }
 
         //Horas Extras
         //50% (horas extra diurnas): Se pagan al 150% del valor de la hora ordinaria.
