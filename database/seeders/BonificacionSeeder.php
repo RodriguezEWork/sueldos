@@ -23,6 +23,11 @@ class BonificacionSeeder extends Seeder
         $vacaciones = self::vacaciones();
         DB::table('bonificaciones')->insert($vacaciones);
 
+        $justificadas = self::justificadas();
+        DB::table('bonificaciones')->insert($justificadas);
+
+        $injustificadas = self::injustificadas();
+        DB::table('bonificaciones')->insert($injustificadas);
     }
 
     private function extras() {
@@ -49,6 +54,96 @@ class BonificacionSeeder extends Seeder
                 ];
             }
         }
+
+        return $bonificaciones;
+    }
+
+    private function justificadas() {
+        $bonificaciones = [];
+
+        $startTime = "08:00:00";
+        $endTime = "23:59:00";
+
+        $bonificaciones[] = [
+            'user_id' => 2,
+            'tipo' => TiposType::LICENCIA_MEDICA,
+            'fecha' => "2020-05-01",
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'created_at' => now()
+        ];
+
+        $bonificaciones[] = [
+            'user_id' => 2,
+            'tipo' => TiposType::LICENCIA_MEDICA,
+            'fecha' => "2020-05-02",
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'created_at' => now()
+        ];
+
+        $bonificaciones[] = [
+            'user_id' => 2,
+            'tipo' => TiposType::LICENCIA_MEDICA,
+            'fecha' => "2020-05-03",
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'created_at' => now()
+        ];
+
+        $bonificaciones[] = [
+            'user_id' => 2,
+            'tipo' => TiposType::LICENCIA_MEDICA,
+            'fecha' => "2020-05-04",
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'created_at' => now()
+        ];
+
+        return $bonificaciones;
+    }
+
+    private function injustificadas() {
+        $bonificaciones = [];
+
+        $startTime = "08:00:00";
+        $endTime = "23:59:00";
+
+        $bonificaciones[] = [
+            'user_id' => 3,
+            'tipo' => TiposType::INJUSTIFICADO(),
+            'fecha' => "2024-05-01",
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'created_at' => now()
+        ];
+
+        $bonificaciones[] = [
+            'user_id' => 3,
+            'tipo' => TiposType::INJUSTIFICADO,
+            'fecha' => "2024-05-02",
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'created_at' => now()
+        ];
+
+        $bonificaciones[] = [
+            'user_id' => 3,
+            'tipo' => TiposType::INJUSTIFICADO,
+            'fecha' => "2024-05-03",
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'created_at' => now()
+        ];
+
+        $bonificaciones[] = [
+            'user_id' => 3,
+            'tipo' => TiposType::INJUSTIFICADO,
+            'fecha' => "2024-05-04",
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'created_at' => now()
+        ];
 
         return $bonificaciones;
     }
